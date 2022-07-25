@@ -11,6 +11,6 @@ config_version=5
 [application]
 
 config/name="procedural world generator"
-run/main_scene="res://general.tscn"
+run/main_scene="res://particle shader.tscn"
 config/features=PackedStringArray("4.0", "Vulkan Clustered")
 config/icon="res://icon.png"

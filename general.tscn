@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dv4sugdnit1on"]
-
-[ext_resource type="Script" path="res://general.gd" id="1_uilm7"]
-
-[node name="root" type="Node"]
-script = ExtResource("1_uilm7")
-vertices = 30000
