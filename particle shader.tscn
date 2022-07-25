@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bhpbjssc1krlt"]
+
+[ext_resource type="Script" path="res://particle shader.gd" id="1_v3n4g"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_08p6p"]
+
+[sub_resource type="Sky" id="Sky_sp3mo"]
+sky_material = SubResource("ProceduralSkyMaterial_08p6p")
+
+[sub_resource type="Environment" id="Environment_bl7nq"]
+background_mode = 2
+sky = SubResource("Sky_sp3mo")
+
+[node name="root" type="Node"]
+script = ExtResource("1_v3n4g")
+vertices = 941
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_bl7nq")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.69233)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.63593, 0, 0.771747, 0, 1, 0, -0.771747, 0, 0.63593, 3.18533, 0, 2.69233)
