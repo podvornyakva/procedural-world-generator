@@ -4,15 +4,19 @@ extends Node
 var goldenRatio : float = (1 + sqrt(5))/2
 var increment : float = TAU * goldenRatio
 
+# Определение переменной с возможностью доступа из панели редактора.
 @export var vertices : int = 30000
 
+# Объявление переменных с их последующим определением в момент загруки.
 @onready var material : ShaderMaterial = ShaderMaterial.new()
 @onready var instance : MeshInstance3D = MeshInstance3D.new()
 
+# Исходный код шейдера.
 var shader_code : String = "shader_type spatial;
 							void vertex() {POINT_SIZE = 10.0;}
 							void fragment() {ALBEDO = vec3(0,1,1);}"
 
+# Флаг обновления переменной vertices.
 var check: int = 0
 
 func _ready():
