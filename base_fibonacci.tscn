@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhpbjssc1krlt"]
+[gd_scene load_steps=5 format=3 uid="uid://kq11picor6gt"]
 
-[ext_resource type="Script" path="res://particle shader.gd" id="1_v3n4g"]
+[ext_resource type="Script" path="res://base_fibonacci.gd" id="1_uvrhm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_08p6p"]
 
@@ -12,7 +12,7 @@ background_mode = 2
 sky = SubResource("Sky_sp3mo")
 
 [node name="root" type="Node"]
-script = ExtResource("1_v3n4g")
+script = ExtResource("1_uvrhm")
 vertices = 941
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

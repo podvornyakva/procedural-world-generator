@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://0r44tn2o0tk2"]
+
+[ext_resource type="Script" path="res://base_cube.gd" id="1_8oimm"]
+
+[node name="root" type="Node"]
+script = ExtResource("1_8oimm")
