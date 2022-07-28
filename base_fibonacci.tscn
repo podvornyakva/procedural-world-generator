@@ -13,13 +13,25 @@ sky = SubResource("Sky_sp3mo")
 
 [node name="root" type="Node"]
 script = ExtResource("1_uvrhm")
-vertices = 941
+vertices = 12068
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_bl7nq")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.69233)
+transform = Transform3D(0.804438, 0, -0.594037, 0, 1, 0, 0.594037, 0, 0.804438, -2.03554, 0, 2.69233)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.63593, 0, 0.771747, 0, 1, 0, -0.771747, 0, 0.63593, 3.18533, 0, 2.69233)
+transform = Transform3D(0.997782, 0, 0.0665702, 0, 1, 0, -0.0665702, 0, 0.997782, 0.244788, 0, 3.67194)
+
+[node name="resolution" type="HSlider" parent="."]
+offset_left = 13.0
+offset_top = 17.0
+offset_right = 506.0
+offset_bottom = 33.0
+scale = Vector2(2, 2)
+min_value = 3.0
+max_value = 30000.0
+value = 6.0
+
+[connection signal="value_changed" from="resolution" to="." method="_on_resolution_value_changed"]

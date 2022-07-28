@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtnsdrh7too27"]
-
-[ext_resource type="Script" path="res://base_icosphere.gd" id="1_kpenn"]
-
-[node name="base_icosphere" type="Node"]
-script = ExtResource("1_kpenn")
