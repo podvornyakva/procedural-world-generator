@@ -21,7 +21,6 @@ float distance_to_torus(vec3 p, float radius, float thikness){
 	return length(vec2(length(p.xz) - radius, p.y)) - thikness; //torus;
 }
 
-
 // infinte repetitions
 // adapted from https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 vec3 opRep(vec3 p, vec3 c) {

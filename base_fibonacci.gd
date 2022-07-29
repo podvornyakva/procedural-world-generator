@@ -4,7 +4,7 @@ extends Node
 var goldenRatio : float = (1 + sqrt(5))/2
 var increment : float = TAU * goldenRatio
 
-@export_range(3,30000) var vertices : int = 300
+@export_range(3,300000) var vertices : int = 300
 
 @onready var material : ShaderMaterial = ShaderMaterial.new()
 @onready var instance : MeshInstance3D = MeshInstance3D.new()
@@ -68,6 +68,5 @@ func generate_mesh_data(mesh_instance: MeshInstance3D):
 	mesh_instance.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINE_STRIP, mesh_data)
 	mesh_instance.mesh.surface_set_material(0,material)
 
-
-func _on_resolution_value_changed(value):
-	vertices = value
+func _on_resolution_drag_ended(value_changed):
+	vertices = $resolution.value

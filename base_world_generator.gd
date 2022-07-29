@@ -16,14 +16,18 @@ var edge_pairs : Array[int] = [0,1,4,1,2,5,2,3,6,3,0,7,8,9,4,9,10,5,10,11,6,11,8
 var base_directions : Array[Vector3] = [Vector3(0,1,0), Vector3(-1,0,0), Vector3(0,0,-1),
 										Vector3(1,0,0), Vector3(0,0,1), Vector3(0,-1,0)]
 
-var shader_code : String = "shader_type spatial;
-							//void vertex() {POINT_SIZE = 10.0;}
-							void fragment() {ALBEDO = vec3(0,1,1);}"
+var shader_code : String = ""
 
-@onready var material : ShaderMaterial = ShaderMaterial.new()
+@onready var ramp : Gradient = preload("res://ramp.res")
+@onready var noise : Noise = preload("res://noise.res")
+@onready var noise_texture : NoiseTexture = preload("res://noise_texture.res")
+@onready var shader : Shader = preload("res://shader.res")
+@onready var material : ShaderMaterial = preload("res://material.res")
 @onready var instance : MeshInstance3D = MeshInstance3D.new()
 
+
 func _ready():
+	
 	generate_object()
 	generate_sphere(divide, instance)
 	add_child(instance)
@@ -35,9 +39,11 @@ func _process(delta):
 		flag = divide
 
 func generate_object():
+	noise_texture.color_ramp = ramp
+	noise_texture.noise = noise
+	material.shader = shader
+	material.shader.set_default_texture_param("noise_texture", noise_texture, 0)
 	instance.mesh = ArrayMesh.new()
-	material.shader = Shader.new()
-	material.shader.set_code(shader_code)
 
 func generate_sphere(division : int, _instance: MeshInstance3D):
 
@@ -46,13 +52,11 @@ func generate_sphere(division : int, _instance: MeshInstance3D):
 	
 	resolution = max(0, division)
 	vertices_per_face = ((resolution + 3) * (resolution + 3) - (resolution + 3)) / 2
-	var vertices_amount = vertices_per_face * 8 - (resolution + 2) * 12 + 6
-	var triangles_per_face = (resolution + 1) * (resolution + 1)
 	
 	vertices = base_directions
 	normals = base_directions
+
 	var edges : Array
-	
 	for i in range(0, vertex_pairs.size(), 2):
 		var edge_start : = vertices[vertex_pairs[i]]
 		var edge_end : = vertices[vertex_pairs[i+1]]
@@ -70,7 +74,7 @@ func generate_sphere(division : int, _instance: MeshInstance3D):
 			normals.push_back(vertex.normalized())
 		edge_vertex_indices[resolution + 1] = vertex_pairs[i + 1]
 
-		var edge_index : int = i / 2
+		#var edge_index : int = i / 2
 		edges.push_back(edge_vertex_indices)
 
 	for i in range(0, edge_pairs.size(), 3):
@@ -83,7 +87,7 @@ func generate_sphere(division : int, _instance: MeshInstance3D):
 
 	_instance.mesh.clear_surfaces()
 	_instance.mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, result)
-	_instance.mesh.surface_set_material(0,material)
+	_instance.mesh.surface_set_material(0, material)
 
 	print ("vertices: ",vertices.size(), " faces: ", indices.size()/3)
 	indices.resize(0)
@@ -145,11 +149,6 @@ func create_face(side_a: Array[int], side_b: Array[int], bottom: Array[int], rev
 #func _on_division_drag_ended(value_changed):
 #	divide = $division.value
 
-
-func _on_division_value_changed(value):
-	divide = value
-
-
 func _on_division_drag_ended(value_changed):
-	if (divide != $division.value):
+	if (value_changed):
 		divide = $division.value

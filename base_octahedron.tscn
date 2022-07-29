@@ -1,22 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwnxhimayitxv"]
+[gd_scene load_steps=2 format=3 uid="uid://cwnxhimayitxv"]
 
 [ext_resource type="Script" path="res://base_octahedron.gd" id="1_2egvr"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lisng"]
-sky_energy = 3.26
-
-[sub_resource type="Sky" id="Sky_lqps3"]
-sky_material = SubResource("ProceduralSkyMaterial_lisng")
-process_mode = 1
-radiance_size = 4
-
-[sub_resource type="Environment" id="Environment_7ohm3"]
-background_mode = 2
-sky = SubResource("Sky_lqps3")
-
 [node name="root" type="Node"]
 script = ExtResource("1_2egvr")
-divide = 20
+divide = 64
 
 [node name="division" type="HSlider" parent="."]
 offset_left = 14.0
@@ -25,13 +13,10 @@ offset_right = 163.0
 offset_bottom = 28.0
 max_value = 256.0
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_7ohm3")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="light" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.687747, 0, -0.725951, 0, 1, 0, 0.725951, 0, 0.687747, -2.57108, 0, 2.221)
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="camera" type="Camera3D" parent="."]
 transform = Transform3D(0.876987, -0.11095, 0.46753, 0, 0.972978, 0.230898, -0.480514, -0.202495, 0.853289, 0.925282, 0.464786, 1.61636)
 
 [connection signal="drag_ended" from="division" to="." method="_on_division_drag_ended"]
