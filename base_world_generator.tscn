@@ -20,7 +20,7 @@ offset_bottom = 28.0
 max_value = 256.0
 
 [node name="light" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.687747, 0, -0.725951, 0, 1, 0, 0.725951, 0, 0.687747, -2.57108, 0, 2.221)
+transform = Transform3D(0.687747, 0, -0.725951, 0, 1, 0, 0.725951, 0, 0.687747, 0, 0, 0)
 
 [node name="camera" type="Camera3D" parent="."]
 transform = Transform3D(0.876987, -0.11095, 0.46753, 0, 0.972978, 0.230898, -0.480514, -0.202495, 0.853289, 0.925282, 0.464786, 1.61636)

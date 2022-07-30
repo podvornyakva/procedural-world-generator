@@ -88,14 +88,13 @@ func generate_sphere(division : int, _instance: MeshInstance3D):
 			uv.push_back(Vector2(u, v))
 		
 		edge_vertex_indices[resolution + 1] = vertex_pairs[i + 1]
-
-		#var edge_index : int = i / 2
 		edges.push_back(edge_vertex_indices)
 
 	for i in range(0, edge_pairs.size(), 3):
 		var face_index : int  = i / 3
 		var reverse : bool = (face_index >= 4)
 		create_face(edges[edge_pairs[i]], edges[edge_pairs[i + 1]], edges[edge_pairs[i + 2]], reverse)
+	
 	result[ArrayMesh.ARRAY_VERTEX] = vertices
 	result[ArrayMesh.ARRAY_NORMAL] = normals
 	result[ArrayMesh.ARRAY_TEX_UV] = uv

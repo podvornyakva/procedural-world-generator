@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=3 uid="uid://bbytsq7dfi5qb"]
+
+[ext_resource type="PackedScene" uid="uid://owat78ab7043" path="res://assets/cube/cube.tscn" id="1_iiitk"]
+[ext_resource type="Script" path="res://assets/cube/resource/CubeData.gd" id="2_ulef2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0lw7o"]
+
+[sub_resource type="Sky" id="Sky_33qv6"]
+sky_material = SubResource("ProceduralSkyMaterial_0lw7o")
+
+[sub_resource type="Environment" id="Environment_x73yy"]
+background_mode = 2
+sky = SubResource("Sky_33qv6")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uc6f7"]
+noise_type = 0
+frequency = 0.545
+fractal_type = 2
+
+[sub_resource type="Resource" id="Resource_2k4b7"]
+script = ExtResource("2_ulef2")
+radius = 26.702
+resolution = 50
+noise = SubResource("FastNoiseLite_uc6f7")
+
+[sub_resource type="Animation" id="Animation_fq5cu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_c6xt2"]
+resource_name = "pr"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h8rum"]
+_data = {
+"RESET": SubResource("Animation_fq5cu"),
+"pr": SubResource("Animation_c6xt2")
+}
+
+[node name="root" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 48.1357)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.776123, 0, -0.630581, 0, 1, 0, 0.630581, 0, 0.776123, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_x73yy")
+
+[node name="planet" parent="." instance=ExtResource("1_iiitk")]
+data = SubResource("Resource_2k4b7")
+
+[node name="animation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../planet")
+autoplay = "pr"
+libraries = {
+"": SubResource("AnimationLibrary_h8rum")
+}

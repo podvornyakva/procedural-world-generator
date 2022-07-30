@@ -8,9 +8,18 @@
 
 config_version=5
 
+_global_script_classes=[{
+"base": "Resource",
+"class": &"CubeData",
+"language": &"GDScript",
+"path": "res://assets/cube/resource/CubeData.gd"
+}]
+_global_script_class_icons={
+"CubeData": ""
+}
+
 [application]
 
 config/name="procedural world generator"
-run/main_scene="res://base_fibonacci.tscn"
 config/features=PackedStringArray("4.0", "Vulkan Clustered")
 config/icon="res://icon.png"
