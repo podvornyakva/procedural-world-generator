@@ -9,6 +9,7 @@ var vertices_per_face : int
 
 var vertices : = PackedVector3Array()
 var normals : = PackedVector3Array()
+var uv : = PackedVector2Array()
 var indices : = PackedInt32Array()
 
 var vertex_pairs : Array[int] = [0,1,0,2,0,3,0,4,1,2,2,3,3,4,4,1,5,1,5,2,5,3,5,4]
@@ -55,6 +56,14 @@ func generate_sphere(division : int, _instance: MeshInstance3D):
 	
 	vertices = base_directions
 	normals = base_directions
+	var u : float
+	var v : float
+	for i in range(0, base_directions.size()):
+		u = atan2(vertices[i][0], vertices[i][2]) / (-2 * PI)
+		if (u < 0):
+			u += 1
+		v = asin(vertices[i][1]) / PI + 0.5
+		uv.push_back(Vector2(u, v))
 
 	var edges : Array
 	for i in range(0, vertex_pairs.size(), 2):
@@ -72,6 +81,12 @@ func generate_sphere(division : int, _instance: MeshInstance3D):
 			var vertex : Vector3 = edge_start.slerp(edge_end, t)
 			vertices.push_back(vertex)
 			normals.push_back(vertex.normalized())
+			u = atan2(vertex[0], vertex[2]) / (-2 * PI)
+			if (u < 0):
+				u += 1
+			v = asin(vertex[1]) / PI + 0.5
+			uv.push_back(Vector2(u, v))
+		
 		edge_vertex_indices[resolution + 1] = vertex_pairs[i + 1]
 
 		#var edge_index : int = i / 2
@@ -83,6 +98,7 @@ func generate_sphere(division : int, _instance: MeshInstance3D):
 		create_face(edges[edge_pairs[i]], edges[edge_pairs[i + 1]], edges[edge_pairs[i + 2]], reverse)
 	result[ArrayMesh.ARRAY_VERTEX] = vertices
 	result[ArrayMesh.ARRAY_NORMAL] = normals
+	result[ArrayMesh.ARRAY_TEX_UV] = uv
 	result[ArrayMesh.ARRAY_INDEX] = indices
 
 	_instance.mesh.clear_surfaces()
@@ -93,6 +109,7 @@ func generate_sphere(division : int, _instance: MeshInstance3D):
 	indices.resize(0)
 	vertices.resize(0)
 	normals.resize(0)
+	uv.resize(0)
 
 func create_face(side_a: Array[int], side_b: Array[int], bottom: Array[int], reverse: bool):
 	var vertices_per_edge : int = side_a.size()
@@ -106,12 +123,19 @@ func create_face(side_a: Array[int], side_b: Array[int], bottom: Array[int], rev
 		var side_b_vertex : Vector3 = vertices[side_b[i]]
 		
 		var inner_vertices : int = i - 1
+		var u : float
+		var v : float
 		for j in range(0, inner_vertices):
 			var t : float = (j + 1.0) / (inner_vertices + 1.0)
 			vertex_map.push_back(vertices.size())
 			var vertex : Vector3 = side_a_vertex.slerp(side_b_vertex, t)
 			vertices.push_back(vertex)
 			normals.push_back(vertex.normalized())
+			u = atan2(vertex[0], vertex[2]) / (-2 * PI)
+			if (u < 0):
+				u += 1
+			v = asin(vertex[1]) / PI + 0.5
+			uv.push_back(Vector2(u, v))
 		vertex_map.push_back(side_b[i])
 	
 	for i in range(0, vertices_per_edge):
